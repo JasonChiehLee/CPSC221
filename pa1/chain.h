@@ -209,7 +209,7 @@ public:
    void checkeredSwap(Chain &other);
 
    void removeAt(int index);
-
+   void insertAt(int pos,Node *node);
    // Node *returnPointerAt(int index);
    
 

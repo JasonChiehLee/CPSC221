@@ -29,7 +29,6 @@ void Chain::insertFront(const Block & ndata){
 }
 
 void Chain::insertBack(const Block & ndata){
-
    	Node *newBlock = new Node(ndata);
    	if(size()==0){
    		newBlock->next = NULL;
@@ -37,7 +36,6 @@ void Chain::insertBack(const Block & ndata){
    		head_ = newBlock;
 		tail_ = newBlock;
 		length_++;
-		std::cout<<length_<<std::endl;
    	}else{
    		newBlock->next = NULL;
    		tail_->next = newBlock;
@@ -101,7 +99,10 @@ void Chain::removeBack() {
 }
 
 void Chain::replaceBlock(int index, const Block& newB) {
-	if(index > size()-1){
+	if(size()==0){
+		std::cout<<"can't get from empty chain"<<std::endl;
+		return;
+	}else if(index > size()-1){
 		return;
 	}else if(index==0 && size()!=0){
 		removeFront();
@@ -151,16 +152,52 @@ void Chain::removeAt(int index){
 	
 }
 
+void Chain::insertAt(int pos,Node *node){
+	if(pos > size()-1){
+		return;
+	}else if(pos==0 && size()!=0){
+		removeFront();
+		//Node *newBlock = new Node(ndata);
+		head_->prev = node;
+		node->prev = NULL;
+		node->next = head_;
+		head_ = node;
+		length_++;
+	}else if(pos==(size()-1)){
+		removeBack();
+		node->next = NULL;
+   		tail_->next = node;
+   		node->prev = tail_;
+   		tail_ = node;
+   		length_++;
+	}else{
+		int i = 0;
+		Node *pointer = head_;
+		while(i<pos && pos<size()){
+			pointer = pointer->next;
+			i++;
+		}
+		//Node *color = new Node(newB);		
+		node->prev = pointer->prev;
+		node->next = pointer->next;
+		pointer->prev->next = node;
+		pointer->next->prev = node;
+		delete pointer;
+		pointer = NULL;
+	}
+		
+}
 
 void Chain::swap(int pos1, int pos2){
 	if(pos1==pos2){
-		std::cout<<"finished swap"<<std::endl;
 		return;
 	}else if(pos1<size() && pos2<size()){
 		const Block *block1 = getBlock(pos1);
+		Node *nodePos1 = new Node(*block1);
 		const Block *block2 = getBlock(pos2);
-		replaceBlock(pos1, *block2);
-		replaceBlock(pos2, *block1);
+		Node *nodePos2 = new Node(*block2);
+		insertAt(pos1,nodePos2);
+		insertAt(pos2,nodePos1);
 	}else{
 		return;
 	}
@@ -169,11 +206,17 @@ void Chain::swap(int pos1, int pos2){
 }
 
 void Chain::checkeredSwap(Chain &other) {
+	//if two chains size not equals
 	if(size()!=other.size()){
 	 	std::cout << "Block sizes differ." << std::endl;
+	 	//ends program
 	 	return;
 	}
-
+	//if both chains have only one element
+	if(size()==1){
+		//end program
+		return;
+	}
 	int i = 1;
 	Chain colorPic = other;
 	while(i<size()){
@@ -190,28 +233,21 @@ void Chain::moveToBack(int startPos, int len){
 	int i = 1;
 	if(size()==0){
 		return;
-	}else if(startPos+len > size()-1){
+	}else if(startPos+len == size()){
+		return;
+	}else if(startPos+len > size()){
+		std::cout<<"out of bound"<<std::endl;
 		return;
 	}else if(len!=0){
 		while(i<len+1){
 			const Block *saveBlockData = getBlock(startPos);
 			Node *replaceNode = new Node(*saveBlockData);
 			removeAt(startPos);
-			
-			if(size()==0){
-   			replaceNode->next = NULL;
-   			replaceNode->prev = NULL;
-   			head_ = replaceNode;
-			tail_ = replaceNode;
-			length_++;
-
-   			}else{
    			replaceNode->next = NULL;
    			tail_->next = replaceNode;
    			replaceNode->prev = tail_;
    			tail_ = replaceNode;
    			length_++;
-   			}
 
 			i++;
 		}
@@ -219,13 +255,6 @@ void Chain::moveToBack(int startPos, int len){
 }
 
 void Chain::rotate(int k){
-   int i = 0;
-   while(i < k){
-   		const Block *saveBlockData = getBlock(0);
-   		removeFront();
-   		insertBack(*saveBlockData);
-   		i++;
-   }
-   std::cout<<"finished rotate "<<std::endl;
+	moveToBack(0,k);
 }
 

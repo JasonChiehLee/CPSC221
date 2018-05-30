@@ -78,6 +78,8 @@ int main() {
 	checker1.writeToFile("images/rosegarden-checker1.png");
 	checker2.writeToFile("images/rosegarden-checker2.png");
 
+
+
 	return 0;
 
 }
