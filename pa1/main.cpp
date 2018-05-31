@@ -37,7 +37,6 @@ int main() {
 	
 	/* The following will not work until you start implementing chain.cpp */
 	
-	
 	//Testing Chain.cpp
 	Chain c1(rose, 4, 3);
 	PNG rose_dup = c1.render(4, 3);
