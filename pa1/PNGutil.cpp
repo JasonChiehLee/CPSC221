@@ -39,5 +39,17 @@ PNG grayscale(PNG image) {
  * @return The UBCify'd image.
 **/
 PNG ubcify(PNG image) {
-/* your code here */
+	
+    for (unsigned x = 0; x < image.width(); x++) {
+        for (unsigned y = 0; y < image.height(); y++) {
+            HSLAPixel *pixel = image.getPixel(x, y);
+            int hue = pixel->h;
+            if(abs(hue - 60)>abs(hue - 240)){
+                pixel->h = 240;
+            }else{
+                pixel->h = 60;
+            }
+        }
+    }
+  return image;	
 }
