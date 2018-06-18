@@ -13,6 +13,7 @@
 #include "cs221util/PNG.h"
 #include "cs221util/RGBAPixel.h"
 #include "stats.h"
+#include "math.h"
 using namespace std;
 using namespace cs221util;
 
@@ -131,9 +132,9 @@ public:
    * You may want a recursive helper function for this one.
     */
    void prune(double pct, int tol);
-   void executePrune(double pct, int tol, Node* subroot);
-   long pruneNodes(Node *subroot,RGBAPixel a,int tol);
-   long leafNodes(Node *subroot);
+   void executePrune(double &pct, int &tol, Node* subroot);
+   int pruneNodes(Node *subroot,RGBAPixel& a,int&tol);
+   int leafNodes(Node *subroot);
    /* =============== end of public PA3 FUNCTIONS =========================*/
 
 private:

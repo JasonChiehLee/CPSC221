@@ -17,15 +17,15 @@ using namespace std;
 int main()
 {
 
-	// read in image
+	//read in image
 	PNG origIm1;
-	origIm1.readFromFile("images/stanley-totem-poles.png");
+	origIm1.readFromFile("images/remb.png");
 	PNG origIm2;
-	origIm2.readFromFile("images/ubc-totem-poles.png");
+	origIm2.readFromFile("images/rosa.png");
 	PNG origIm3;
-	origIm3.readFromFile("images/remb.png");
+	origIm3.readFromFile("images/stanley-totem-poles.png");
 	PNG origIm4;
-	origIm4.readFromFile("images/rosa.png");
+	origIm4.readFromFile("images/ubc-totem-poles.png");
 
 	// use it to build a twoDtree
 	twoDtree t1(origIm1);
@@ -49,10 +49,10 @@ int main()
 	PNG ppic3 = tCopy3.render();
 	PNG ppic4 = tCopy4.render();
 
-	ppic1.writeToFile("images/prunedstanleytotem.png");
-	ppic2.writeToFile("images/prunedubctotem.png");
-	ppic3.writeToFile("images/prunedremb.png");
-	ppic4.writeToFile("images/prunedrosa.png");
+	ppic1.writeToFile("images/prunedRemb.png");
+	ppic2.writeToFile("images/prunedRosa.png");
+	ppic3.writeToFile("images/prunedStanley.png");
+	ppic4.writeToFile("images/prunedUbc.png");
 
   return 0;
 }

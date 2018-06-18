@@ -73,6 +73,7 @@ public:
 	 */
 	long rectArea(pair<int,int> ul, pair<int,int> lr);
 
+
 };
 
 #endif
